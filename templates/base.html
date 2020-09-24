@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{% block title %}revolve - revolutions start here{% endblock %}</title>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link type="text/css" rel="stylesheet" href="{% static 'vendor/materialize/css/materialize.min.css' %}"
+        media="screen,projection"/>
+  {% block css %}
+
+  {% endblock %}
+</head>
+<body>
+
+<nav class="black" role="navigation">
+  <div class="nav-wrapper container">
+    <a href="{% url 'protests:index' %}"
+       class="brand-logo">revolve</a>
+    <ul id="nav-mobile" class="right">
+      <li class="{% block about_active %}{% endblock %}"><a href="">about</a></li>
+      {% if request.user.is_authenticated %}
+        <li><a href="">logout</a></li>
+      {% else %}
+        <li><a href="{% url 'user:sign-in' %}">log in</a></li>
+        <li><a href="{% url 'user:sign-up' %}">join us</a></li>
+      {% endif %}
+    </ul>
+  </div>
+</nav>
+
+<br>
+<div class="container">
+  {% block body %}
+
+  {% endblock %}
+</div>
+
+<script type="text/javascript" src="{% static 'vendor/jquery/js/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'vendor/materialize/js/materialize.min.js' %}"></script>
+{% block js %}
+{% endblock %}
+</body>
+</html>

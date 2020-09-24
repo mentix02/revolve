@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block body %}
+  <div class="row">
+    <form class="col s12 m6 offset-m3"
+          method="post" action="{% url 'user:sign-up' %}">
+      <h3 class="center">join us</h3>
+      <h5 class="grey-text center">start the revolution today</h5>
+      <br>
+      {% csrf_token %}
+      <div class="input-field col s12 m6">
+        <input id="first_name" name="first_name" type="text" autofocus>
+        <label for="first_name">first name</label>
+      </div>
+      <div class="input-field col s12 m6">
+        <input id="last_name" name="last_name" type="text">
+        <label for="last_name">last name</label>
+      </div>
+      <div class="input-field col s12">
+        <input id="email" type="email">
+        <label for="email">email</label>
+      </div>
+      <div class="input-field col s12">
+        <input id="username" name="username" type="text">
+        <label for="username">username</label>
+      </div>
+      <div class="input-field col s12">
+        <input id="password" name="password" type="password">
+        <label for="password">password</label>
+      </div>
+      <br>
+      <div class="center">
+        <button class="btn black">sign up</button>
+      </div>
+    </form>
+  </div>
+{% endblock %}
+{% block css %}
+  <style>
+      /* label color */
+      .input-field label {
+          color: #000 !important;
+      }
+
+      /* label focus color */
+      .input-field input:focus + label {
+          color: #000 !important;
+      }
+
+      /* label underline focus color */
+      .input-field input[type=text]:focus {
+          border-bottom: 1px solid #000 !important;
+          box-shadow: 0 1px 0 0 #000 !important;
+      }
+  </style>
+{% endblock %}
+{% block js %}
+  <script>
+  const inputs = $('input');
+  inputs.attr('autocomplete', 'off');
+  inputs.attr('required', 'true');
+  </script>
+{% endblock %}
