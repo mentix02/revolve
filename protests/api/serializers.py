@@ -1,9 +1,12 @@
-from rest_framework.serializers import ModelSerializer
+from rest_framework import serializers
 
 from protests.models import Protest
 
 
-class ProtestSerializer(ModelSerializer):
+class ProtestSerializer(serializers.ModelSerializer):
+
+    organizer = serializers.StringRelatedField()
+
     class Meta:
         model = Protest
         fields = '__all__'
