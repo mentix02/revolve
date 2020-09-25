@@ -44,6 +44,7 @@ class Protest(models.Model):
         Participant.objects.get_or_create(protest=self, user=user)
 
     class Meta:
+        ordering = ('-timestamp',)
         indexes: List[models.Index] = [
             models.Index(fields=('slug',)),
         ]
