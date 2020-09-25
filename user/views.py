@@ -2,11 +2,20 @@ from typing import List, Dict
 
 from django.contrib import messages
 from django.db import IntegrityError
-from django.views.generic import View
 from django.shortcuts import render, redirect
+from django.views.generic import View, DetailView
 from django.contrib.auth import logout, login, authenticate
 
 from user.models import User
+
+
+class UserDetailView(DetailView):
+    model = User
+    slug_url_kwarg = 'username'
+    context_object_name = 'user'
+    slug_field = 'username__iexact'
+    template_name = 'user/profile.html'
+    queryset = User.objects.filter(is_active=True)
 
 
 # noinspection PyMethodMayBeStatic

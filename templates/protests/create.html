@@ -16,13 +16,13 @@
       <div class="input-field col s12">
         <textarea name="description"
                   id="description"
-                  style="height: 10em;"
+                  style="height: 8em;"
                   class="materialize-textarea"></textarea>
         <label for="description">description</label>
       </div>
       <div class="input-field col s12">
-        <input name="datetime" id="datetime" type="datetime-local">
-        <label for="datetime"></label>
+        <input name="timestamp" id="timestamp" type="datetime-local">
+        <label for="timestamp"></label>
       </div>
       <div class="input-field col s12 m6">
         <input id="latitude" name="venue_lat" type="text">
@@ -102,7 +102,7 @@
 
     const maxDate = `${year}-${month}-${day}T${hour}:${minutes}`;
 
-    $('#datetime').attr('min', maxDate);
+    $('#timestamp').attr('min', maxDate);
 
   </script>
 {% endblock %}

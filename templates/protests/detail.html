@@ -2,19 +2,106 @@
 {% block title %}{{ protest.name }}{% endblock %}
 {% block body %}
   <div class="row">
-    <div class="col s12 m6 offset-m3">
+    <div class="col s12 m12">
       <h3 class="center">{{ protest.name }}</h3>
-      <h4 class="center grey-text">{{ protest.datetime | date }}</h4>
-      {% if request.user.id == protest.organizer.id %}
-        <div class="center">
+      <h5 class="center">
+        {% if protest.is_finished %}
+          <span class="red-text">past</span>
+        {% else %}
+          <span class="green-text">upcoming</span>
+        {% endif %}
+        event by <a href="{% url 'user:detail' protest.organizer.username %}">
+        {{ protest.organizer.username }}
+      </a>
+      </h5>
+      <h5 class="center grey-text">{{ protest.timestamp | date }} {{ protest.timestamp | time }}</h5>
+      <div class="center">
+        {% if request.user.id == protest.organizer.id %}
           <a href="{% url 'protests:delete' protest.slug %}" class="btn red">
             <i class="material-icons">delete</i>
           </a>
           <a href="{% url 'protests:edit' protest.slug %}" class="btn blue">
             <i class="material-icons">edit</i>
           </a>
+        {% else %}
+          {% if request.user.is_authenticated %}
+            {% if participates %}
+              <a href="{% url 'participant:delete' protest.id %}" class="btn red">
+                leave
+              </a>
+            {% else %}
+              <a href="{% url 'participant:create' protest.id %}" class="btn green">join</a>
+            {% endif %}
+          {% else %}
+            <a href="{% url 'user:sign-in' %}" class="btn blue" id="join">
+              join
+            </a>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+    <div class="col s12 m6 offset-m3">
+      <h6>
+        {{ protest.description | linebreaks }}
+      </h6>
+      <br>
+    </div>
+    <div class="col s12 m12">
+      <div id="map_canvas" style="width: 100%; height: 400px"></div>
+      <div class="row">
+        <div class="col s12 m6">
+          <ul class="collection with-header">
+            <li class="collection-header"><h5>people involved</h5></li>
+            {% for participant in protest.participants.all %}
+              <li class="collection-item">
+                <a href="{% url 'user:detail' participant.user.username %}">
+                  {{ participant.user.get_full_name }}
+                </a><br>
+                {{ participant.user.email }}
+              </li>
+            {% endfor %}
+          </ul>
         </div>
-      {% endif %}
+        <div class="col s12 m6">
+          <ul class="collection with-header">
+            <li class="collection-header"><h5>comments</h5></li>
+            {% for comment in protest.comments.all %}
+              <li class="collection-item">
+              <span class="title">
+                <a href="{% url 'user:detail' participant.user.username %}">
+                  {{ comment.user.get_full_name }}
+                </a>
+                <span class="grey-text right">{{ comment.timestamp | timesince }} ago</span>
+              </span>
+                <div style="margin-top: 8px">
+                  {{ comment.body }}
+                </div>
+              </li>
+            {% empty %}
+              <li class="collection-header">
+                <h6>no comments yet</h6>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
+{% endblock %}
+{% block js %}
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+  <script>
+    let coOrds = new google.maps.LatLng({{ protest.venue_lat }}, {{ protest.venue_long }})
+    let mapOptions = {
+      zoom: 15,
+      center: coOrds,
+    };
+    let map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+    let marker = new google.maps.Marker({
+      position: coOrds,
+      map: map,
+      title: 'location'
+    });
+    marker.setMap(map);
+  </script>
 {% endblock %}

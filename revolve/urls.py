@@ -6,6 +6,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('protests.urls')),
-    path('api/', include('revolve.api')),
     path('user/', include('user.urls')),
+    path('api/', include('revolve.api')),
+    path('participant/', include('participant.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -1,11 +1,12 @@
 from typing import Any, Dict, List
 
 from django.contrib import messages
-from django.views.generic import View, TemplateView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import View, TemplateView, DetailView
 from django.shortcuts import render, redirect, get_object_or_404
 
 from protests.models import Protest
+from participant.models import Participant
 
 
 def index(request):
@@ -24,6 +25,16 @@ class ProtestDetailView(DetailView):
     context_object_name = 'protest'
     queryset = Protest.objects.all()
     template_name = 'protests/detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['participates'] = False
+        user = self.request.user
+        if user.is_authenticated:
+            context['participates'] = Participant.objects.filter(
+                protest=self.get_object(), user=user
+            ).exists()
+        return context
 
 
 # noinspection PyMethodMayBeStatic

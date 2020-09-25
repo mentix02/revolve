@@ -18,6 +18,7 @@ INSTALLED_APPS = [
     # Local Apps
     'user.apps.UserConfig',
     'protests.apps.ProtestsConfig',
+    'comments.apps.CommentsConfig',
     'participant.apps.ParticipantConfig',
     # Third Party Apps
     'rest_framework',

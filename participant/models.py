@@ -12,6 +12,7 @@ class Participant(models.Model):
     )
 
     class Meta:
+        ordering = ('-timestamp',)
         unique_together = ['user', 'protest']
 
     def __str__(self) -> str:

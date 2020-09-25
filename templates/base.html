@@ -27,7 +27,7 @@
     </a>
     <ul id="nav-mobile" class="right hide-on-small-and-down">
       {% if request.user.is_authenticated %}
-        <li><a href="">account</a></li>
+        <li><a href="{% url 'user:detail' request.user.username %}">account</a></li>
         <li><a href="{% url 'protests:dashboard' %}">dashboard</a></li>
         <li><a href="{% url 'user:logout' %}">logout</a></li>
       {% else %}

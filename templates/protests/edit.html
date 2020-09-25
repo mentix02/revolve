@@ -20,8 +20,8 @@
         <label for="description">description</label>
       </div>
       <div class="input-field col s12">
-        <input name="datetime" id="datetime" value="{{ protest.datetime.isoformat | slice:":-9" }}" type="datetime-local">
-        <label for="datetime"></label>
+        <input name="timestamp" id="timestamp" value="{{ protest.datetime.isoformat | slice:":-9" }}" type="datetime-local">
+        <label for="timestamp"></label>
       </div>
       <div class="input-field col s12 m6">
         <input id="latitude" name="venue_lat" value="{{ protest.venue_lat }}" type="text">
