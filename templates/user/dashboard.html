@@ -4,15 +4,51 @@
   <div class="row">
     <h3 class="center">dashboard</h3>
     <h5 class="center grey-text">manage your events here</h5>
-    <div class="col s12 m12">
-      <ul class="tabs tabs-fixed-width">
-        <li class="tab"><a class="black-text" href="#test1">upcoming</a></li>
-        <li class="tab"><a class="black-text" href="#test2">past</a></li>
-      </ul>
-      <div id="test1">Test 1</div>
-      <div id="test2">Test 2</div>
+    <br>
+    <div class="center">
+      <a href="{% url 'protests:create' %}" class="btn green">create</a>
     </div>
-
+    <br>
+    <div class="col s12 m12">
+      <table class="highlight responsive-table">
+        <thead>
+        <tr>
+          <th>name</th>
+          <th>comments</th>
+          <th>participants</th>
+          <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for protest in request.user.organized_protests.all %}
+          <tr>
+            <td>
+              <a href="{% url 'protests:detail' protest.slug %}">
+                {{ protest.name }}
+              </a>
+            </td>
+            <td>{{ protest.comments.count }}</td>
+            <td>{{ protest.participants.count }}</td>
+            <td>
+              <a class="btn red right" href="{% url 'protests:delete' protest.id %}">
+                <i class="material-icons">delete</i>
+              </a>
+              <a class="btn blue right" href="{% url 'protests:edit' protest.slug %}">
+                <i class="material-icons">edit</i>
+              </a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td>looking empty here</td>
+            <td>no events so far</td>
+            <td>create one today</td>
+            <td><a href="{% url 'protests:create' %}" class="btn green">create</a></td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
   </div>
 {% endblock %}
 {% block css %}
@@ -41,9 +77,4 @@
       }
 
   </style>
-{% endblock %}
-{% block js %}
-  <script>
-    $('.tabs').tabs();
-  </script>
 {% endblock %}

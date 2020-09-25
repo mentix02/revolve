@@ -1,11 +1,37 @@
 {% extends 'base.html' %}
 {% block body %}
-
-{% endblock %}
-{% block js %}
-  <script>
-    $.getJSON("/api/protests/list/", function (data) {
-      console.log(data);
-    });
-  </script>
+  <div class="row">
+    <div class="col s12 m6 offset-m3">
+      {% for protest in protests %}
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">
+              <a href="{% url 'protests:detail' protest.slug %}">
+                {{ protest.name }}
+                {% if request.user.is_authenticated %}
+                  {% if request.user.id == protest.organizer.id %}
+                    <a class="btn red right" href="{% url 'protests:delete' protest.id %}">
+                      <i class="material-icons">delete</i>
+                    </a>
+                    <a class="btn blue right" href="{% url 'protests:edit' protest.slug %}">
+                      <i class="material-icons">edit</i>
+                    </a>
+                  {% else %}
+                    <a class="btn-small green right" href="{% url 'participant:create' protest.id %}">join</a>
+                  {% endif %}
+                {% endif %}
+              </a>
+            </span>
+            {{ protest.participants.count }} participants
+            <span class="right">{{ protest.comments.count }} comments</span>
+            <hr>
+            {{ protest.timestamp | date }} {{ protest.timestamp | time }}
+            organized by <a href="{% url 'user:detail' protest.organizer.username %}">
+            {{ protest.organizer.username }}
+          </a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
 {% endblock %}

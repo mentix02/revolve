@@ -14,17 +14,15 @@
           {% for protest in user.organized_protests.all %}
             <div class="card">
               <div class="card-content">
-                <span class="card-title">
-                  <a href="{% url 'protests:detail' protest.slug %}">
-                    {{ protest.name }}
-                  </a>
-                </span>
-                <p>
-                  {{ protest.participants.count }} participants
-                  <span class="right">{{ protest.comments.count }} comments</span>
-                  <hr>
-                  {{ protest.timestamp | date }} {{ protest.timestamp | time }}
-                </p>
+                  <span class="card-title">
+                    <a href="{% url 'protests:detail' protest.slug %}">
+                      {{ protest.name }}
+                    </a>
+                  </span>
+                {{ protest.participants.count }} participants
+                <span class="right">{{ protest.comments.count }} comments</span>
+                <hr>
+                {{ protest.timestamp | date }} {{ protest.timestamp | time }}
               </div>
             </div>
           {% endfor %}
