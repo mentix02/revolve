@@ -13,6 +13,7 @@ def index(request):
 
 
 class DashboardListView(LoginRequiredMixin, TemplateView):
+    login_url = '/user/sign-in/'
     template_name = 'user/dashboard.html'
 
 
@@ -31,7 +32,7 @@ class ProtestEditView(LoginRequiredMixin, View):
     login_url = '/user/sign-in/'
     FIELDS: List[str] = [
         'name',
-        'datetime',
+        'timestamp',
         'venue_lat',
         'venue_long',
         'description',
@@ -81,7 +82,7 @@ class ProtestCreateView(LoginRequiredMixin, View):
 
     REQUIRED_FIELDS: List[str] = [
         'name',
-        'datetime',
+        'timestamp',
         'venue_lat',
         'venue_long',
         'description',
