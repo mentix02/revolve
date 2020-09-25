@@ -2,15 +2,19 @@ from typing import Any, Dict, List
 
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import View, TemplateView, DetailView
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic import View, ListView, DetailView, TemplateView
 
 from protests.models import Protest
 from participant.models import Participant
 
 
-def index(request):
-    return render(request, 'protests/list.html')
+class ProtestListView(ListView):
+    model = Protest
+    paginate_by = 10
+    queryset = Protest.objects.all()
+    context_object_name = 'protests'
+    template_name = 'protests/list.html'
 
 
 class DashboardListView(LoginRequiredMixin, TemplateView):

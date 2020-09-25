@@ -1,7 +1,7 @@
 from django.urls import path
 
 from protests.views import (
-    index,
+    ProtestListView,
     ProtestEditView,
     ProtestDetailView,
     ProtestCreateView,
@@ -12,7 +12,7 @@ from protests.views import (
 app_name = 'protests'
 
 urlpatterns = [
-    path('', index, name='index'),
+    path('', ProtestListView.as_view(), name='index'),
     path('create/', ProtestCreateView.as_view(), name='create'),
     path('dashboard/', DashboardListView.as_view(), name='dashboard'),
     path('edit/<slug:slug>/', ProtestEditView.as_view(), name='edit'),
