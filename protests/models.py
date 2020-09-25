@@ -17,7 +17,11 @@ class Protest(models.Model):
         max_length=250, help_text='Name of organisation or event.'
     )
     organizer = models.ForeignKey(
-        'user.User', null=True, blank=True, on_delete=models.SET_NULL
+        'user.User',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='organized_protests',
     )
 
     def get_absolute_url(self):
