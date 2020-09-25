@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}revolve - dashboard{% endblock %}
+{% block body %}
+  <div class="row">
+    <div class="col s12 m12">
+      <h3 class="center">dashboard</h3>
+
+      <ul class="tabs tabs-fixed-width">
+        <li class="tab"><a class="black-text" href="#test1">upcoming</a></li>
+        <li class="tab"><a class="black-text" href="#test2">past</a></li>
+      </ul>
+      <div id="test1">Test 1</div>
+      <div id="test2">Test 2</div>
+    </div>
+
+  </div>
+{% endblock %}
+{% block css %}
+  <style>
+      .tabs .tab a {
+          color: #000;
+      }
+
+      .tabs .tab a:hover {
+          background-color: #eeeeee;
+          color: #000;
+      }
+
+      .tabs .tab a.active {
+          background-color: transparent;
+          color: #000;
+      }
+
+      .tabs .tab a:focus.active {
+          color: #000;
+          background-color: transparent;
+      }
+
+      .tabs .indicator {
+          background-color: #000;
+      }
+
+  </style>
+{% endblock %}
+{% block js %}
+  <script>
+    $('.tabs').tabs();
+  </script>
+{% endblock %}

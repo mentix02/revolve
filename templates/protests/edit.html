@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}editing {{ protest.name }}{% endblock %}
+{% block body %}
+  <div class="row">
+    <form class="col s12 m6 offset-m3"
+          action="{% url 'protests:edit' protest.slug %}" method="post">
+      <h3 class="center">editing event</h3>
+      <h5 class="grey-text center">we all change directions</h5>
+      <br>
+      {% csrf_token %}
+      <div class="input-field col s12">
+        <input id="name" name="name" value="{{ protest.name }}" type="text" autofocus>
+        <label for="name">name</label>
+      </div>
+      <div class="input-field col s12">
+        <textarea name="description"
+                  id="description"
+                  style="height: 10em;"
+                  class="materialize-textarea">{{ protest.description }}</textarea>
+        <label for="description">description</label>
+      </div>
+      <div class="input-field col s12">
+        <input name="datetime" id="datetime" value="{{ protest.datetime.isoformat | slice:":-9" }}" type="datetime-local">
+        <label for="datetime"></label>
+      </div>
+      <div class="input-field col s12 m6">
+        <input id="latitude" name="venue_lat" value="{{ protest.venue_lat }}" type="text">
+        <label class="active" for="latitude">latitude</label>
+      </div>
+      <div class="input-field col s12 m6">
+        <input id="longitude" name="venue_long" value="{{ protest.venue_long }}" type="text">
+        <label class="active" for="longitude">longitude</label>
+      </div>
+      <div id="map_canvas" style="width: 100%; height: 200px"></div>
+      <br>
+      <div class="center">
+        <button class="btn black">UPDATE</button>
+      </div>
+    </form>
+  </div>
+{% endblock %}
+{% block js %}
+  <script>
+    M.updateTextFields();
+  </script>
+{% endblock %}
