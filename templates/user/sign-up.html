@@ -1,4 +1,8 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block title %}
+  revolve - join us
+{% endblock %}
 {% block body %}
   <div class="row">
     <form class="col s12 m6 offset-m3"
@@ -16,7 +20,7 @@
         <label for="last_name">last name</label>
       </div>
       <div class="input-field col s12">
-        <input id="email" type="email">
+        <input id="email" name="email" type="email">
         <label for="email">email</label>
       </div>
       <div class="input-field col s12">
@@ -35,23 +39,7 @@
   </div>
 {% endblock %}
 {% block css %}
-  <style>
-      /* label color */
-      .input-field label {
-          color: #000 !important;
-      }
-
-      /* label focus color */
-      .input-field input:focus + label {
-          color: #000 !important;
-      }
-
-      /* label underline focus color */
-      .input-field input[type=text]:focus {
-          border-bottom: 1px solid #000 !important;
-          box-shadow: 0 1px 0 0 #000 !important;
-      }
-  </style>
+  <link rel="stylesheet" href="{% static 'css/blackinput.css' %}">
 {% endblock %}
 {% block js %}
   <script>

@@ -19,18 +19,38 @@
 <nav class="black" role="navigation">
   <div class="nav-wrapper container">
     <a href="{% url 'protests:index' %}"
-       class="brand-logo">revolve</a>
-    <ul id="nav-mobile" class="right">
-      <li class="{% block about_active %}{% endblock %}"><a href="">about</a></li>
+       class="brand-logo">
+      revolve
+    </a>
+    <a href="#" data-target="mobile-demo" class="sidenav-trigger">
+      <i class="material-icons">menu</i>
+    </a>
+    <ul id="nav-mobile" class="right hide-on-small-and-down">
       {% if request.user.is_authenticated %}
-        <li><a href="">logout</a></li>
+        <li><a href="">account</a></li>
+        <li><a href="">dashboard</a></li>
+        <li><a href="{% url 'user:logout' %}">logout</a></li>
       {% else %}
+        <li><a href="">about</a></li>
         <li><a href="{% url 'user:sign-in' %}">log in</a></li>
         <li><a href="{% url 'user:sign-up' %}">join us</a></li>
       {% endif %}
     </ul>
   </div>
 </nav>
+
+<ul class="sidenav" id="mobile-demo">
+  {% if request.user.is_authenticated %}
+    <li><a href="">account</a></li>
+    <li><a href="">dashboard</a></li>
+    <li class="divider"></li>
+    <li><a href="{% url 'user:logout' %}">logout</a></li>
+  {% else %}
+    <li><a href="">about</a></li>
+    <li><a href="{% url 'user:sign-in' %}">log in</a></li>
+    <li><a href="{% url 'user:sign-up' %}">join us</a></li>
+  {% endif %}
+</ul>
 
 <br>
 <div class="container">
@@ -39,8 +59,35 @@
   {% endblock %}
 </div>
 
+{% if request.user.is_authenticated %}
+  <div class="fixed-action-btn">
+    <a class="btn-floating btn-large red"
+       href="{% url 'protests:create' %}">
+      <i class="large material-icons">add</i>
+    </a>
+  </div>
+{% endif %}
+
 <script type="text/javascript" src="{% static 'vendor/jquery/js/jquery.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'vendor/materialize/js/materialize.min.js' %}"></script>
+<script>
+  $('.sidenav').sidenav();
+  {% if messages %}
+    {% for message in messages %}
+      M.toast({
+        html: '{{ message }}',
+        classes: `
+        {% if message.tags == "error" %}
+          red
+        {% elif message.tags == "success" %}
+          green
+        {% elif message.tags == "info" %}
+          blue
+        {% endif %}`
+      });
+    {% endfor %}
+  {% endif %}
+</script>
 {% block js %}
 {% endblock %}
 </body>

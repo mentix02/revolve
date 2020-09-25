@@ -1,1 +1,38 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block title %}
+  revolve - login
+{% endblock %}
+{% block body %}
+  <div class="row">
+    <form class="col s12 m6 offset-m3"
+          action="{% url 'user:sign-in' %}" method="post">
+      <h3 class="center">welcome back</h3>
+      <h5 class="grey-text center">regroup with your community</h5>
+      <br>
+      {% csrf_token %}
+      <div class="input-field col s12">
+        <input id="username" name="username" type="text" autofocus>
+        <label for="username">username</label>
+      </div>
+      <div class="input-field col s12">
+        <input id="password" name="password" type="password">
+        <label for="password">password</label>
+      </div>
+      <br>
+      <div class="center">
+        <button class="btn black">sign in</button>
+      </div>
+    </form>
+  </div>
+{% endblock %}
+{% block css %}
+  <link rel="stylesheet" href="{% static 'css/blackinput.css' %}">
+{% endblock %}
+{% block js %}
+  <script>
+  const inputs = $('input');
+  inputs.attr('autocomplete', 'off');
+  inputs.attr('required', 'true');
+  </script>
+{% endblock %}

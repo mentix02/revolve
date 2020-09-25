@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block body %}
+
+{% endblock %}
+{% block js %}
+  <script>
+    $.getJSON("/api/protests/list/", function (data) {
+      console.log(data);
+    });
+  </script>
+{% endblock %}

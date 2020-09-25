@@ -19,6 +19,8 @@ INSTALLED_APPS = [
     'user.apps.UserConfig',
     'protests.apps.ProtestsConfig',
     'participant.apps.ParticipantConfig',
+    # Third Party Apps
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -62,7 +64,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
