@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}{{ protest.name }} comments{% endblock %}
+{% block body %}
+<div class="row">
+  <div class="col s12 m6 offset-m3">
+    <h3 class="center">
+      <a href="{{ protest.get_absolute_url }}">{{ protest.name }}</a> comments
+    </h3>
+    <h5 class="center grey-text">engage with the community</h5>
+    <br>
+    <form method="post" action="{% url 'comments:create' protest.id %}">
+      {% csrf_token %}
+      <div class="input-field col s12">
+        <textarea id="content" name="content" style="height: 10em;"
+                  class="materialize-textarea" type="text" autofocus></textarea>
+        <label for="content">content</label>
+      </div>
+      <div class="center">
+        <button class="btn green" type="submit">comment</button>
+      </div>
+    </form>
+    <br>
+    {% for comment in comments %}
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">
+            <a href="{% url 'user:detail' comment.user.username %}">{{ comment.user.username }}</a>
+            {% if request.user.is_authenticated %}
+                {% if request.user.id == comment.user.id %}
+                  <a class="btn red right" href="{% url 'comments:delete' comment.id %}">
+                    <i class="material-icons">delete</i>
+                  </a>
+                {% endif %}
+              {% endif %}
+          </span>
+          <p style="font-size: 20px">{{ comment.content }}</p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

@@ -8,5 +8,6 @@ urlpatterns = [
     path('', include('protests.urls')),
     path('user/', include('user.urls')),
     path('api/', include('revolve.api')),
+    path('comments/', include('comments.urls')),
     path('participant/', include('participant.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

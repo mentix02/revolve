@@ -12,9 +12,15 @@ from participant.models import Participant
 class ProtestListView(ListView):
     model = Protest
     paginate_by = 10
-    queryset = Protest.objects.all()
     context_object_name = 'protests'
     template_name = 'protests/list.html'
+    queryset = Protest.objects.all().order_by('-id')
+
+    def get_queryset(self):
+        sort_by = self.request.GET.get('sort_by', 't')
+        if sort_by == 'i':
+            return Protest.objects.all().order_by('-id')
+        return Protest.objects.all().order_by('-timestamp')
 
 
 class DashboardListView(LoginRequiredMixin, TemplateView):

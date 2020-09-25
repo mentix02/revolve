@@ -35,15 +35,13 @@
       <ul class="collection with-header">
         <li class="collection-header"><h5>comments</h5></li>
         {% for comment in user.comments.all %}
-          <li class="collection-item">
-              <span class="title">
-                <a href="{% url 'user:detail' participant.user.username %}">
-                  {{ comment.user.get_full_name }}
-                </a>
-                <span class="grey-text right">{{ comment.timestamp | timesince }} ago</span>
-              </span>
-            <div style="margin-top: 8px">
-              {{ comment.body }}
+          <li style="margin: 11px 0;" class="collection-item">
+            <span class="title">
+              <a href="{{ comment.protest.get_absolute_url }}">{{ comment.protest.name }}</a>
+              <span class="grey-text right">{{ comment.timestamp | timesince }} ago</span>
+            </span>
+            <div style="margin-top: 8px;">
+              {{ comment.content }}
             </div>
           </li>
         {% empty %}
@@ -60,10 +58,12 @@
           <li class="collection-item">
             <a href="{% url 'protests:detail' participant.protest.slug %}">
               {{ participant.protest.name }}
-            </a><br>
-            <a href="{% url 'user:detail' participant.protest.organizer.username %}">
+            </a>
+            <span class="right">
+              by <a href="{% url 'user:detail' participant.protest.organizer.username %}">
               {{ participant.protest.organizer.username }}
             </a>
+            </span>
           </li>
         {% endfor %}
       </ul>

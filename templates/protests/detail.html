@@ -64,17 +64,26 @@
         </div>
         <div class="col s12 m6">
           <ul class="collection with-header">
-            <li class="collection-header"><h5>comments</h5></li>
-            {% for comment in protest.comments.all %}
+            <li class="collection-header">
+              <h5>
+                <a href="{% url 'comments:list' protest.slug %}">
+                  comments
+                </a>
+                <a href="{% url 'comments:list' protest.slug %}" class="btn green right">
+                  <i class="material-icons">add</i>
+                </a>
+              </h5>
+            </li>
+            {% for comment in protest.comments.all|slice:":10" %}
               <li class="collection-item">
               <span class="title">
-                <a href="{% url 'user:detail' participant.user.username %}">
+                <a href="{% url 'user:detail' comment.user.username %}">
                   {{ comment.user.get_full_name }}
                 </a>
                 <span class="grey-text right">{{ comment.timestamp | timesince }} ago</span>
               </span>
                 <div style="margin-top: 8px">
-                  {{ comment.body }}
+                  {{ comment.content }}
                 </div>
               </li>
             {% empty %}

@@ -2,6 +2,11 @@
 {% block body %}
   <div class="row">
     <div class="col s12 m6 offset-m3">
+      <div>
+        <a class="btn blue" href="{% url 'protests:index' %}?sort_by=i">show newly added</a>
+        <a class="btn blue right" href="{% url 'protests:index' %}?sort_by=t">show upcoming</a>
+      </div>
+      <br>
       {% for protest in protests %}
         <div class="card">
           <div class="card-content">
@@ -10,7 +15,7 @@
                 {{ protest.name }}
                 {% if request.user.is_authenticated %}
                   {% if request.user.id == protest.organizer.id %}
-                    <a class="btn red right" href="{% url 'protests:delete' protest.id %}">
+                    <a class="btn red right" href="{% url 'protests:delete' protest.slug %}">
                       <i class="material-icons">delete</i>
                     </a>
                     <a class="btn blue right" href="{% url 'protests:edit' protest.slug %}">

@@ -30,10 +30,10 @@
             <td>{{ protest.comments.count }}</td>
             <td>{{ protest.participants.count }}</td>
             <td>
-              <a class="btn red right" href="{% url 'protests:delete' protest.id %}">
+              <a class="btn red" href="{% url 'protests:delete' protest.id %}">
                 <i class="material-icons">delete</i>
               </a>
-              <a class="btn blue right" href="{% url 'protests:edit' protest.slug %}">
+              <a class="btn blue" href="{% url 'protests:edit' protest.slug %}">
                 <i class="material-icons">edit</i>
               </a>
             </td>
