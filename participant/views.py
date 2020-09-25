@@ -4,7 +4,6 @@ from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from protests.models import Protest
-from participant.models import Participant
 
 
 # noinspection PyMethodMayBeStatic
